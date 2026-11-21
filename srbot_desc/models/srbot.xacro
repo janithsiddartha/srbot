@@ -1,0 +1,207 @@
+<?xml version="1.0"?>
+<robot name="srbot" xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+  <!-- BASE LINKS -->
+
+  <link name="base_footprint" />
+
+  <link name="base_link">
+    <inertial>
+      <origin xyz="5.643506381932405e-16 3.255869066499464e-16 0.09526904860001788" rpy="0 0 0" />
+      <mass value="0.8883014312204645" />
+      <inertia ixx="0.005305" iyy="0.005305" izz="0.006488" ixy="0.0" iyz="0.0" ixz="0.0" />
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://srbot_desc/meshes/base_link.stl" scale="0.001 0.001 0.001" />
+      </geometry>
+      <!-- <material name="a"> -->
+        <!-- <color rgba="0.0 1.0 1.0 1.0"/> Red color (R, G, B, Alpha) -->
+      <!-- </material> -->
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://srbot_desc/meshes/base_link.stl" scale="0.001 0.001 0.001" />
+      </geometry>
+    </collision>
+  </link>
+
+  <!-- WHEEL LINKS -->
+
+  <link name="left_wheel_1">
+    <inertial>
+      <origin xyz="-0.004999806973077149 -0.008660074481549776 1.3877787807814457e-17" rpy="0 0 0" />
+      <mass value="0.03574123455429439" />
+      <inertia ixx="1e-05" iyy="1.3e-05" izz="8e-06" ixy="3e-06" iyz="-0.0" ixz="0.0" />
+    </inertial>
+    <visual>
+      <origin xyz="-0.056 -0.096995 -0.03" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://srbot_desc/meshes/left_wheel_1.stl"
+          scale="0.001 0.001 0.001" />
+      </geometry>
+      <!-- <material name="b"> -->
+        <!-- <color rgba="1.0 0.0 0.0 1.0"/> Red color (R, G, B, Alpha) -->
+      <!-- </material> -->
+    </visual>
+    <collision>
+      <origin xyz="-0.056 -0.096995 -0.03" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://srbot_desc/meshes/left_wheel_1.stl"
+          scale="0.001 0.001 0.001" />
+      </geometry>
+    </collision>
+  </link>
+
+  <link name="right_wheel_1">
+    <inertial>
+      <origin xyz="-0.004999806972965461 0.008660074481582708 1.3877787807814457e-17" rpy="0 0 0" />
+      <mass value="0.035741234554287286" />
+      <inertia ixx="1e-05" iyy="1.3e-05" izz="8e-06" ixy="-3e-06" iyz="-0.0" ixz="0.0" />
+    </inertial>
+    <visual>
+      <origin xyz="-0.056 0.096995 -0.03" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://srbot_desc/meshes/right_wheel_1.stl"
+          scale="0.001 0.001 0.001" />
+      </geometry>
+      <!-- <material name="c"> -->
+        <!-- <color rgba="0.0 1.0 0.0 1.0"/> Red color (R, G, B, Alpha) -->
+      <!-- </material> -->
+    </visual>
+    <collision>
+      <origin xyz="-0.056 0.096995 -0.03" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://srbot_desc/meshes/right_wheel_1.stl"
+          scale="0.001 0.001 0.001" />
+      </geometry>
+    </collision>
+  </link>
+
+  <link name="back_wheel_1">
+    <inertial>
+      <origin xyz="0.00999961394615441 -7.67165219672053e-14 6.938893903907228e-18" rpy="0 0 0" />
+      <mass value="0.03574123455429425" />
+      <inertia ixx="1.5e-05" iyy="8e-06" izz="8e-06" ixy="-0.0" iyz="-0.0" ixz="-0.0" />
+    </inertial>
+    <visual>
+      <origin xyz="0.112 -0.0 -0.03" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://srbot_desc/meshes/back_wheel_1.stl"
+          scale="0.001 0.001 0.001" />
+      </geometry>
+      <!-- <material name="d"> -->
+        <!-- <color rgba="0.0 0.0 0.0 1.0"/> Red color (R, G, B, Alpha) -->
+      <!-- </material> -->
+    </visual>
+    <collision>
+      <origin xyz="0.112 -0.0 -0.03" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://srbot_desc/meshes/back_wheel_1.stl"
+          scale="0.001 0.001 0.001" />
+      </geometry>
+    </collision>
+  </link>
+
+  <!-- LIDAR LINK -->
+
+  <link name="lidar_1">
+    <inertial>
+      <origin xyz="5.5476036134154956e-18 0.0 0.01056130335258168" rpy="0 0 0" />
+      <mass value="0.1040017891764952" />
+      <inertia ixx="4.8e-05" iyy="4.8e-05" izz="8.1e-05" ixy="0.0" iyz="0.0" ixz="-0.0" />
+    </inertial>
+    <visual>
+      <origin xyz="-0.0 -0.0 -0.16" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://srbot_desc/meshes/lidar_1.stl" scale="0.001 0.001 0.001" />
+      </geometry>
+      <!-- <material name="e"> -->
+        <!-- <color rgba="0.0 0.0 0.0 1.0"/> Red color (R, G, B, Alpha) -->
+      <!-- </material> -->
+    </visual>
+    <collision>
+      <origin xyz="-0.0 -0.0 -0.16" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://srbot_desc/meshes/lidar_1.stl" scale="0.001 0.001 0.001" />
+      </geometry>
+    </collision>
+  </link>
+
+  <!-- CAMERA LINK -->
+
+  <link name="camera_1">
+    <inertial>
+      <origin xyz="0.12 0.0 -0.06" rpy="0 0 0" />
+      <mass value="0.035324999999999995" />
+      <inertia ixx="5e-06" iyy="3e-06" izz="3e-06" ixy="0.0" iyz="0.0" ixz="0.0" />
+    </inertial>
+    <visual>
+      <origin xyz="-0.0 -0.0 -0.2" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://srbot_desc/meshes/camera_1.stl" scale="0.001 0.001 0.001" />
+      </geometry>
+      <!-- <material name="f"> -->
+        <!-- <color rgba="1.0 1.0 1.0 1.0"/> Red color (R, G, B, Alpha) -->
+      <!-- </material> -->
+    </visual>
+    <collision>
+      <origin xyz="-0.0 -0.0 -0.2" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://srbot_desc/meshes/camera_1.stl" scale="0.001 0.001 0.001" />
+      </geometry>
+    </collision>
+  </link>
+
+  <!-- IMU LINK -->
+
+  <link name="imu_link">
+  </link>
+
+  <!-- JOINTS -->
+
+  <joint name="base_joint" type="fixed">
+    <parent link="base_footprint"/>
+    <child link="base_link"/>
+    <origin xyz="0.0 0.0 0.0" rpy="0 0 0" />
+  </joint>
+
+  <joint name="lidar_joint" type="fixed">
+    <origin xyz="0.0 0.0 0.16" rpy="0 0 0" />
+    <parent link="base_link" />
+    <child link="lidar_1" />
+  </joint>
+
+  <joint name="imu_joint" type="fixed">
+    <origin xyz="0.0 0.0 0.1" rpy="0 0 0" />
+    <parent link="base_link"/>
+    <child link="imu_link"/>
+  </joint>
+
+  <joint name="camera_joint" type="fixed">
+    <origin xyz="0.0 0.0 0.2" rpy="0 0 0" />
+    <parent link="base_link" />
+    <child link="camera_1" />
+  </joint>
+
+  <joint name="left_wheel_joint" type="fixed">
+    <origin xyz="0.056 0.096995 0.03" rpy="0 0 0" />
+    <parent link="base_link" />
+    <child link="left_wheel_1" />
+  </joint>
+
+  <joint name="right_wheel_joint" type="fixed">
+    <origin xyz="0.056 -0.096995 0.03" rpy="0 0 0" />
+    <parent link="base_link" />
+    <child link="right_wheel_1" />
+  </joint>
+
+  <joint name="back_wheel_joint" type="fixed">
+    <origin xyz="-0.112 0.0 0.03" rpy="0 0 0" />
+    <parent link="base_link" />
+    <child link="back_wheel_1" />
+  </joint>
+
+</robot>

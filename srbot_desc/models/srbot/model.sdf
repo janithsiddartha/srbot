@@ -1,0 +1,537 @@
+<?xml version="1.0"?>
+<sdf version="1.5">
+  <model name="srbot">
+    <static>false</static>
+
+    <!-- **************************** BASE_FOOTPRINT ********************************* -->
+
+    <link name="base_footprint" />
+
+    <!-- **************************** BASE_LINK ********************************* -->
+
+    <link name="base_link">
+      <inertial>
+        <pose>0 0 0.09526904860001788 0 0 0</pose>
+        <inertia>
+          <ixx>0.005305</ixx>
+          <iyy>0.005305</iyy>
+          <izz>0.006488</izz>
+          <ixy>0.0</ixy>
+          <iyz>0.0</iyz>
+          <ixz>0.0</ixz>
+        </inertia>
+        <mass>0.8883014312204645</mass>
+      </inertial>
+
+      <visual name="base_visual">
+        <pose> 0 0 0 0 0 0</pose>
+        <geometry>
+          <mesh>
+            <uri>model://srbot/meshes/base_link.stl</uri>
+            <scale>0.001 0.001 0.001</scale>
+          </mesh>
+        </geometry>
+        <material>
+          <ambient>0.0 1.0 1.0 1.0</ambient>
+          <diffuse>0.0 1.0 1.0 1.0</diffuse>
+          <specular>0.0 0.0 0.0 1.0</specular>
+          <emissive>0.0 0.0 0.0 1.0</emissive>
+        </material>        
+      </visual>
+
+      <collision name="base_collision">
+        <pose>0 0 0 0 0 0</pose>
+        <geometry>
+          <mesh>
+            <uri>model://srbot/meshes/base_link.stl</uri>
+            <scale>0.001 0.001 0.001</scale>
+          </mesh>
+        </geometry>
+
+        <surface>
+          <!-- Define the friction properties -->
+          <friction>
+            <ode>
+              <mu>0.001</mu>           <!-- Coefficient of friction -->
+              <mu2>0.001</mu2>         <!-- Second coefficient of friction -->
+              <fdir1>1 0 0</fdir1>   <!-- Direction of the first friction axis -->
+              <slip1>0.0</slip1>     <!-- Slip along the first friction axis -->
+              <slip2>0.0</slip2>     <!-- Slip along the second friction axis -->
+            </ode>
+          </friction>
+        </surface>
+      </collision>
+    </link>
+
+    <!-- **************************** LIDAR ********************************* -->
+
+    <link name="lidar_1">
+      <inertial>
+        <pose>5.5476036134154956e-18 0.0 0.01056130335258168 0 0 0</pose>
+        <inertia>
+          <ixx>4.8e-05</ixx>
+          <iyy>4.8e-05</iyy>
+          <izz>8.1e-05</izz>
+          <ixy>0.0</ixy>
+          <iyz>-0.0</iyz>
+          <ixz>-0.0</ixz>
+        </inertia>
+        <mass>0.1040017891764952</mass>
+      </inertial>
+
+      <visual name="lidar_visual">
+        <pose>0.0 0.0 -0.0 0 0 -1.57079633</pose>
+        <geometry>
+          <mesh>
+            <uri>model://srbot/meshes/lidar_1.stl</uri>
+            <scale>0.001 0.001 0.001</scale>
+          </mesh>
+        </geometry>
+        <material>
+          <ambient>0.0 0.0 0.0 1.0</ambient>
+          <diffuse>0.0 0.0 0.0 1.0</diffuse>
+          <specular>0.0 0.0 0.0 1.0</specular>
+          <emissive>0.0 0.0 0.0 1.0</emissive>
+        </material>
+      </visual>
+
+      <collision name="lidar_collision">
+        <pose>0.0 -0.0 -0.0 0 0 -1.57079633</pose>
+        <geometry>
+          <mesh>
+            <uri>model://srbot/meshes/lidar_1.stl</uri>
+            <scale>0.001 0.001 0.001</scale>
+          </mesh>
+        </geometry>
+      </collision>
+
+      <sensor name="hls_lfcd_lds" type="ray">
+        <pose>0.0 -0.0 0.18 0 0 0</pose>
+        <always_on>true</always_on>
+        <visualize>false</visualize>
+        <update_rate>5</update_rate>
+        <ray>
+          <scan>
+            <horizontal>
+              <samples>360</samples>
+              <resolution>1.00000</resolution>
+              <min_angle>0.000000</min_angle>
+              <max_angle>6.280000</max_angle>
+            </horizontal>
+          </scan>
+          <range>
+            <min>0.250000</min>
+            <max>8</max>
+            <resolution>0.015000</resolution>
+          </range>
+          <noise>
+            <type>gaussian</type>
+            <mean>0.0</mean>
+            <stddev>0.01</stddev>
+          </noise>
+        </ray>
+        <plugin name="srbot_scan" filename="libgazebo_ros_ray_sensor.so">
+          <ros>
+            <remapping>~/out:=scan</remapping>
+          </ros>
+          <output_type>sensor_msgs/LaserScan</output_type>
+          <frame_name>lidar_1</frame_name>
+        </plugin>
+      </sensor>
+    </link>
+
+    <!-- **************************** IMU ********************************* -->
+
+    <link name="imu_link">
+      <sensor name="srbot_imu" type="imu">
+        <always_on>true</always_on>
+        <update_rate>200</update_rate>
+        <imu>
+          <angular_velocity>
+            <x>
+              <noise type="gaussian">
+                <mean>0.0</mean>
+                <stddev>2e-4</stddev>
+              </noise>
+            </x>
+            <y>
+              <noise type="gaussian">
+                <mean>0.0</mean>
+                <stddev>2e-4</stddev>
+              </noise>
+            </y>
+            <z>
+              <noise type="gaussian">
+                <mean>0.0</mean>
+                <stddev>2e-4</stddev>
+              </noise>
+            </z>
+          </angular_velocity>
+          <linear_acceleration>
+            <x>
+              <noise type="gaussian">
+                <mean>0.0</mean>
+                <stddev>1.7e-2</stddev>
+              </noise>
+            </x>
+            <y>
+              <noise type="gaussian">
+                <mean>0.0</mean>
+                <stddev>1.7e-2</stddev>
+              </noise>
+            </y>
+            <z>
+              <noise type="gaussian">
+                <mean>0.0</mean>
+                <stddev>1.7e-2</stddev>
+              </noise>
+            </z>
+          </linear_acceleration>
+        </imu>
+        <plugin name="srbot_imu" filename="libgazebo_ros_imu_sensor.so">
+          <ros>
+            <!-- <namespace>/tb3</namespace> -->
+            <remapping>~/out:=imu</remapping>
+          </ros>
+        </plugin>
+      </sensor>
+    </link>
+
+    <!-- **************************** CAMERA ********************************* -->
+
+    <link name="camera_1">
+      <inertial>
+        <pose>5.5476036134154956e-18 0.0 0.01056130335258168 0 0 0</pose>
+        <inertia>
+          <ixx>5e-06</ixx>
+          <iyy>3e-06</iyy>
+          <izz>3e-06</izz>
+          <ixy>0.0</ixy>
+          <iyz>0.0</iyz>
+          <ixz>0.0</ixz>
+        </inertia>
+        <mass>0.035324999999999995</mass>
+      </inertial>
+
+      <visual name="camera_visual">
+        <pose>0.0 0.0 0.0 0 0 0</pose>
+        <geometry>
+          <mesh>
+            <uri>model://srbot/meshes/camera_1.stl</uri>
+            <scale>0.001 0.001 0.001</scale>
+          </mesh>
+        </geometry>
+        <material>
+          <ambient>1.0 1.0 1.0 1.0</ambient>
+          <diffuse>1.0 1.0 1.0 1.0</diffuse>
+          <specular>0.0 0.0 0.0 1.0</specular>
+          <emissive>0.0 0.0 0.0 1.0</emissive>
+        </material>
+      </visual>
+
+      <collision name="camera_collision">
+        <pose>0.0 0.0 0.0 0 0 0</pose>
+        <geometry>
+          <mesh>
+            <uri>model://srbot/meshes/camera_1.stl</uri>
+            <scale>0.001 0.001 0.001</scale>
+          </mesh>
+        </geometry>
+      </collision>
+
+      <sensor name="camera" type="camera">
+        <pose>0.13 -0.0 0.14 0 0 0</pose>
+        <always_on>true</always_on>
+        <visualize>false</visualize>
+        <update_rate>30</update_rate>
+        <camera name="picam">
+          <horizontal_fov>1.085595</horizontal_fov>
+          <image>
+            <width>640</width>
+            <height>480</height>
+            <format>R8G8B8</format>
+          </image>
+          <clip>
+            <near>0.03</near>
+            <far>100</far>
+          </clip>
+          <noise>
+            <type>gaussian</type>
+            <!-- Noise is sampled independently per pixel on each frame.
+                  That pixel's noise value is added to each of its color
+                  channels, which at that point lie in the range [0,1]. -->
+            <mean>0.0</mean>
+            <stddev>0.007</stddev>
+          </noise>
+        </camera>
+        <plugin name="camera_driver" filename="libgazebo_ros_camera.so">
+          <ros>
+            <namespace>srbot_cam</namespace>
+            <remapping>image_raw:=image_demo</remapping>
+            <remapping>camera_info:=camera_info_demo</remapping>
+          </ros>
+          <!-- camera_name>omit so it defaults to sensor name</camera_name-->
+          <frame_name>camera_1</frame_name>
+          <!-- <hack_baseline>0.07</hack_baseline> -->
+        </plugin>
+      </sensor>
+    </link>
+
+    <!-- **************************** RIGHT_WHEEL ********************************* -->
+
+    <link name="right_wheel_1">
+      <inertial>
+        <pose>-0.004999806972965461 0.008660074481582708 1.3877787807814457e-17 0 0 0</pose>
+        <inertia>
+          <ixx>1e-05</ixx>
+          <iyy>1.3e-05</iyy>
+          <izz>8e-06</izz>
+          <ixy>-3e-06</ixy>
+          <iyz>-0.0</iyz>
+          <ixz>0.0</ixz>
+        </inertia>
+        <mass>0.03574123455429439</mass>
+      </inertial>
+
+      <visual name="right_wheel_visual">
+        <pose>0 0 0 0 0 0</pose>
+        <geometry>
+          <mesh>
+            <uri>model://srbot/meshes/right_wheel_1.stl</uri>
+            <scale>0.001 0.001 0.001</scale>
+          </mesh>
+        </geometry>
+        <material>
+          <ambient>0.0 1.0 0.0 1.0</ambient>
+          <diffuse>0.0 1.0 0.0 1.0</diffuse>
+          <specular>0.0 0.0 0.0 1.0</specular>
+          <emissive>0.0 0.0 0.0 1.0</emissive>
+        </material>
+      </visual>
+
+      <collision name="right_wheel_collision">
+        <pose>0.056 -0.096995 0.03 0 0 0</pose>
+        <geometry>
+          <mesh>
+            <uri>model://srbot/meshes/right_wheel_1.stl</uri>
+            <scale>0.001 0.001 0.001</scale>
+          </mesh>
+        </geometry>
+
+        <surface>
+          <!-- Define the friction properties -->
+          <friction>
+            <ode>
+              <mu>10000</mu>           <!-- Coefficient of friction -->
+              <mu2>1000000</mu2>         <!-- Second coefficient of friction -->
+              <fdir1>1 0 0</fdir1>   <!-- Direction of the first friction axis -->
+              <slip1>0.0</slip1>     <!-- Slip along the first friction axis -->
+              <slip2>0.0</slip2>     <!-- Slip along the second friction axis -->
+            </ode>
+          </friction>
+        </surface>
+      </collision>
+    </link>
+
+    <!-- **************************** LEFT_WHEEL ********************************* -->
+
+    <link name="left_wheel_1">
+      <inertial>
+        <pose>-0.004999806973077149 -0.008660074481549776 1.3877787807814457e-17 0 0 0</pose>
+        <inertia>
+          <ixx>1e-05</ixx>
+          <iyy>1.3e-05</iyy>
+          <izz>8e-06</izz>
+          <ixy>3e-06</ixy>
+          <iyz>-0.0</iyz>
+          <ixz>0.0</ixz>
+        </inertia>
+        <mass>0.03574123455429439</mass>
+      </inertial>
+
+      <visual name="left_wheel_visual">
+        <pose>0 0 0 0 0 0</pose>
+        <geometry>
+          <mesh>
+            <uri>model://srbot/meshes/left_wheel_1.stl</uri>
+            <scale>0.001 0.001 0.001</scale>
+          </mesh>
+        </geometry>
+        <material>
+          <ambient>1.0 0.0 0.0 1.0</ambient>
+          <diffuse>1.0 0.0 0.0 1.0</diffuse>
+          <specular>0.0 0.0 0.0 1.0</specular>
+          <emissive>0.0 0.0 0.0 1.0</emissive>
+        </material>
+      </visual>
+
+      <collision name="left_wheel_collision">
+        <pose>0.056 0.096995 0.03 0 0 0</pose>
+        <geometry>
+          <mesh>
+            <uri>model://srbot/meshes/left_wheel_1.stl</uri>
+            <scale>0.001 0.001 0.001</scale>
+          </mesh>
+        </geometry>
+
+        <surface>
+          <!-- Define the friction properties -->
+          <friction>
+            <ode>
+              <mu>10000</mu>           <!-- Coefficient of friction -->
+              <mu2>1000000</mu2>         <!-- Second coefficient of friction -->
+              <fdir1>1 0 0</fdir1>   <!-- Direction of the first friction axis -->
+              <slip1>0.0</slip1>     <!-- Slip along the first friction axis -->
+              <slip2>0.0</slip2>     <!-- Slip along the second friction axis -->
+            </ode>
+          </friction>
+        </surface>
+      </collision>
+    </link>
+
+    <!-- **************************** BACK_WHEEL ********************************* -->
+
+    <link name="back_wheel_1">
+      <inertial>
+        <pose>0.00999961394615441 -7.67165219672053e-14 6.938893903907228e-18 0 0 0</pose>
+        <inertia>
+          <ixx>1.5e-05</ixx>
+          <iyy>8e-06</iyy>
+          <izz>8e-06</izz>
+          <ixy>-0.0</ixy>
+          <iyz>-0.0</iyz>
+          <ixz>-0.0</ixz>
+        </inertia>
+        <mass>0.03574123455429439</mass>
+      </inertial>
+
+      <visual name="back_wheel_visual">
+        <pose>0 0 0 0 0 0</pose>
+        <geometry>
+          <mesh>
+            <uri>model://srbot/meshes/back_wheel_1.stl</uri>
+            <scale>0.001 0.001 0.001</scale>
+          </mesh>
+        </geometry>
+        <material>
+          <ambient>0.0 0.0 1.0 1.0</ambient>
+          <diffuse>0.0 0.0 1.0 1.0</diffuse>
+          <specular>0.0 0.0 0.0 1.0</specular>
+          <emissive>0.0 0.0 0.0 1.0</emissive>
+        </material>
+      </visual>
+
+      <collision name="back_wheel_collision">
+        <pose>-0.112 0.0 0.03 0 0 0</pose>
+        <geometry>
+          <mesh>
+            <uri>model://srbot/meshes/back_wheel_1.stl</uri>
+            <scale>0.001 0.001 0.001</scale>
+          </mesh>
+        </geometry>
+
+        <surface>
+          <!-- Define the friction properties -->
+          <friction>
+            <ode>
+              <mu>10000</mu>           <!-- Coefficient of friction -->
+              <mu2>1000000</mu2>         <!-- Second coefficient of friction -->
+              <fdir1>1 0 0</fdir1>   <!-- Direction of the first friction axis -->
+              <slip1>0.0</slip1>     <!-- Slip along the first friction axis -->
+              <slip2>0.0</slip2>     <!-- Slip along the second friction axis -->
+            </ode>
+          </friction>
+        </surface>
+      </collision>
+    </link>
+
+
+    <!-- **************************** JOINTS ********************************* -->
+
+    <joint name="base_joint" type="fixed">
+      <parent>base_footprint</parent>
+      <child>base_link</child>
+      <pose>0.0 0.0 0.0 0 0 0</pose>
+    </joint>
+
+    <joint name="lidar_joint" type="fixed">
+      <parent>base_link</parent>
+      <child>lidar_1</child>
+      <pose>0.0 0.0 0.16 0 0 0</pose>
+    </joint>
+
+    <joint name="camera_joint" type="fixed">
+      <parent>base_link</parent>
+      <child>camera_1</child>
+      <pose>0.0 0.0 0.2 0 0 0</pose>
+    </joint>
+
+    <joint name="left_wheel_joint" type="fixed">
+      <pose>0.056 0.096995 0.03 0 0 0</pose>
+      <parent>base_link</parent>
+      <child>left_wheel_1</child>
+    </joint>
+
+    <joint name="right_wheel_joint" type="fixed">
+      <pose>0.056 -0.096995 0.03 0 0 0</pose>
+      <parent>base_link</parent>
+      <child>right_wheel_1</child>
+    </joint>
+
+    <joint name="back_wheel_joint" type="fixed">
+      <pose>-0.112 0.0 0.03 0 0 0</pose>
+      <parent>base_link</parent>
+      <child>back_wheel_1</child>
+    </joint>
+
+    <!-- <joint name="left_wheel_joint" type="revolute">
+      <pose>0.056 0.096995 0.03 0 0 0</pose>
+      <parent>base_link</parent>
+      <child>left_wheel_1</child>
+      <axis>
+        <xyz>0.5 0.866025 0.0</xyz>
+      </axis>
+    </joint>
+
+    <joint name="right_wheel_joint" type="revolute">
+      <pose>0.056 -0.096995 0.03 0 0 0</pose>
+      <parent>base_link</parent>
+      <child>right_wheel_1</child>
+      <axis>
+        <xyz>0.5 -0.866025 0.0</xyz>
+      </axis>
+    </joint>
+
+    <joint name="back_wheel_joint" type="revolute">
+      <pose>-0.112 0.0 0.03 0 0 0</pose>
+      <parent>base_link</parent>
+      <child>back_wheel_1</child>
+      <axis>
+        <xyz>-1.0 0.0 0.0</xyz>
+      </axis>
+    </joint> -->
+
+    <!-- *********************** WHEEL ODOMETRY ***************************    -->
+
+    <plugin name="srbot_omni_controller" filename="libgazebo_ros_planar_move.so">
+      <command_topic>cmd_vel</command_topic>
+      <odometry_topic>odom</odometry_topic>
+      <odometry_frame>odom</odometry_frame>
+      <odometry_rate>20.0</odometry_rate>
+      <robot_base_frame>base_footprint</robot_base_frame>
+    </plugin>
+
+    <!-- *********************** JOINT STATE PUBLISHER *********************   -->
+
+    <!-- <plugin name="srbot_joint_state" filename="libgazebo_ros_joint_state_publisher.so">
+      <ros>
+        <remapping>~/out:=joint_states</remapping>
+      </ros>
+      <update_rate>30</update_rate>
+      <joint_name>left_wheel_joint</joint_name>
+      <joint_name>right_wheel_joint</joint_name>
+      <joint_name>back_wheel_joint</joint_name>
+    </plugin> -->
+
+  </model>
+</sdf>

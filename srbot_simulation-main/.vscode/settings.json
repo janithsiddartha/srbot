@@ -1,0 +1,14 @@
+{
+    "ros.distro": "humble",
+    "cmake.sourceDirectory": "/home/sumukh/ros2_ws/src/srbot_simulation_ros2/srbot_description",
+    "python.autoComplete.extraPaths": [
+        "/home/sumukh/ros2_ws/install/srbot_teleop/lib/python3.10/site-packages",
+        "/opt/ros/humble/lib/python3.10/site-packages",
+        "/opt/ros/humble/local/lib/python3.10/dist-packages"
+    ],
+    "python.analysis.extraPaths": [
+        "/home/sumukh/ros2_ws/install/srbot_teleop/lib/python3.10/site-packages",
+        "/opt/ros/humble/lib/python3.10/site-packages",
+        "/opt/ros/humble/local/lib/python3.10/dist-packages"
+    ]
+}
